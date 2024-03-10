@@ -29,6 +29,8 @@ dependencies {
     implementation("jakarta.faces:jakarta.faces-api:4.0.1")
     implementation("org.primefaces:primefaces:13.0.7:jakarta")
     implementation("com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:20220608.1")
+    implementation("org.hibernate:hibernate-core:6.4.2.Final")
+    implementation("org.postgresql:postgresql:42.7.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
