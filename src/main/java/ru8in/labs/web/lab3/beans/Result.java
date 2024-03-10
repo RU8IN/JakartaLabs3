@@ -94,7 +94,7 @@ public class Result implements Serializable {
             }
         }
         else if (x < 0 && y < 0) {
-            if (y >= (x / 2) - 0.5) {
+            if (y >= -(x / 2) - r/2) {
                 return new HitMessage(true, MESSAGE_SUCCESS);
             }
         }
