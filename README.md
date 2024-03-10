@@ -1,2 +1,2 @@
-# JakartaLabs3
+# JakartaLabs
 JSF

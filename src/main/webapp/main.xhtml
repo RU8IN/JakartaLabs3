@@ -1,0 +1,188 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputStylesheet library="css" name="styles.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <h:outputScript library="js" name="main.js"/>
+    <h:outputScript library="js" name="index.js"/>
+</h:head>
+<body>
+    <f:view>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 bg-light">
+                <div class="header">
+                    <h3 class="text-center">Студент: Васькин Вячеслав Денисович</h3>
+                    <h3 class="text-center">Группа: P3211 | ИСУ: 33231 </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center main">
+        <!-- Картинка с графиком -->
+        <div class="col-3 graph">
+            <svg width="260" height="260" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" id="graph">
+                <!-- 4 четверть -->
+                <circle r="100" cx="130" cy="130" fill="#add8e6"/>
+                <rect x="0" y="0" width="260" height="130" fill="white" />
+                <rect x="0" y="0" width="130" height="260" fill="white" />
+                <!-- 2 четверть -->
+                <polygon points="30, 130 130,130 130,180" fill="#add8e6"/>
+                <!-- 3 четверть -->
+                <rect x="30" y="80" width="100" height="50" fill="#add8e6"/>
+                <!-- Ось X -->
+                <line x1="0" y1="130" x2="350" y2="130" stroke="black"/>
+                <!-- Ось Y -->
+                <line x1="130" y1="0" x2="130" y2="260" stroke="black"/>
+                <!-- R на оси X -->
+                <text x="230" y="127" font-size="12" font-family="Arial">R</text>
+                <text x="180" y="127" font-size="12" font-family="Arial">R/2</text>
+                <text x="80" y="127" font-size="12" font-family="Arial">-R/2</text>
+                <text x="30" y="127" font-size="12" font-family="Arial">-R</text>
+                <!-- R на оси Y -->
+                <text x="133" y="230" font-size="12" font-family="Arial">-R</text>
+                <text x="133" y="180" font-size="12" font-family="Arial">-R/2</text>
+                <text x="133" y="80" font-size="12" font-family="Arial">R/2</text>
+                <text x="133" y="30" font-size="12" font-family="Arial">R</text>
+            </svg>
+        </div>
+        <!-- Форма для ввода X, Y и R -->
+        <div class="col-4">
+            <h:form id="input-form" styleClass="form-group">
+                <p>Введите координаты точки</p>
+
+                <div class="row">
+                    <h:outputLabel for="x-select" value="X" styleClass="col-1 pt-1"/>
+                    <h:selectOneMenu styleClass="col form-control" requiredMessage="Поле X должно быть заполнено"
+                         id="x-select" value="#{resultList.result.x}">
+                        <f:selectItem itemLabel="-5" itemValue="-5"/>
+                        <f:selectItem itemLabel="-4" itemValue="-4"/>
+                        <f:selectItem itemLabel="-3" itemValue="-3"/>
+                        <f:selectItem itemLabel="-2" itemValue="-2"/>
+                        <f:selectItem itemLabel="-1" itemValue="-1"/>
+                        <f:selectItem itemLabel="0" itemValue="0"/>
+                        <f:selectItem itemLabel="1" itemValue="1"/>
+                        <f:selectItem itemLabel="2" itemValue="2"/>
+                        <f:selectItem itemLabel="3" itemValue="3"/>
+                        <f:validateRequired/>
+                    </h:selectOneMenu>
+                </div>
+
+                <div class="row pt-2">
+                    <h:outputLabel  for="y-text" value="Y" styleClass="col-1 pt-1"/>
+                    <h:inputText id="y-text" styleClass="col form-control" validatorMessage="Поле Y должно быть в пределах от -3 до 3"
+                                 maxlength="5" autocomplete="off" a:placeholder="Число от -3 до 3..."
+                                 value="#{resultList.result.y}" type="number" required="true" requiredMessage="Поле Y должно быть заполнено">
+<!--                        <f:validateRequired/>-->
+                        <f:validateDoubleRange minimum="-3" maximum="3" validatorMessage="уээээ"/>
+                    </h:inputText>
+                </div>
+
+                <div class="row pt-2">
+                    <h:outputLabel value="R" styleClass="col-1 pt-1"/>
+                    <div class="col ps-0">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <p:commandLink id="setR1" value="1" onclick="setR(1, this)" styleClass="btn btn-outline-primary btn-sm active setRButton">
+                                <f:ajax render="results"  execute="@form"/>
+                            </p:commandLink>
+                            <p:commandLink id="setR2" value="2" onclick="setR(2, this)" styleClass="btn btn-outline-primary btn-sm setRButton">
+                                <f:ajax render="results"  execute="@form"/>
+                            </p:commandLink>
+                            <p:commandLink id="setR3" value="3" onclick="setR(3, this)" styleClass="btn btn-outline-primary btn-sm setRButton">
+                                <f:ajax render="results" immediate="true" execute="@form"/>
+                            </p:commandLink>
+                            <p:commandLink id="setR4" value="4" onclick="setR(4, this)" styleClass="btn btn-outline-primary btn-sm setRButton">
+                                <f:ajax render="results" immediate="true"/>
+                            </p:commandLink>
+                            <p:commandLink id="setR5" value="5" onclick="setR(5, this)" styleClass="btn btn-outline-primary btn-sm setRButton">
+                                <f:ajax render="results" immediate="true"/>
+                            </p:commandLink>
+                        </div>
+
+                    </div>
+                </div>
+
+                <h:panelGroup>
+                    <h:inputHidden id="r-text" value="#{resultList.r}" validatorMessage="Поле R должно быть от 1 до 5" requiredMessage="Поле R должно быть заполнено">
+                        <f:validateRequired/>
+                        <f:validateLongRange minimum="1" maximum="5"/>
+                    </h:inputHidden>
+                    <h:outputScript>
+                        highlightSelectedRButton(document.getElementById("input-form:setR" + parseInt(#{resultList.r})));
+                    </h:outputScript>
+                </h:panelGroup>
+
+                <div class="row pt-2">
+                    <p:commandButton update="messages results @form" id="submit_form_button" styleClass="btn btn-outline-primary"
+                                     value="Отправить" action="#{resultList.addResult}" >
+                        <!--                        <f:ajax execute="@form" render="results"/>-->
+                    </p:commandButton>
+                </div>
+                <div class="row pt-2">
+                    <p:commandButton update="messages results @form" value="Очистить" styleClass="btn btn-outline-primary" action="#{resultList.clearResults}" type="submit" onclick="clearCircles();">
+                        <!--                        <f:ajax execute="@form" render="results"/>-->
+                    </p:commandButton>
+                </div>
+
+                <div class="row pt-2">
+                    <p:messages id="messages" closable="true" autoUpdate="true"/>
+                </div>
+
+            </h:form>
+        </div>
+        <div class="table-container">
+            <h:panelGroup id="results">
+                <h:dataTable  styleClass="table table-light table-striped" value="#{resultList.results}" var="entry">
+                    <h:column headerClass="result-table__column result-table__column_coords">
+                        <f:facet name="header">Время запроса</f:facet>
+                        <h:outputText value="#{entry.timestamp}"/>
+                    </h:column>
+                    <h:column headerClass="result-table__column result-table__column_coords">
+                        <f:facet name="header">X</f:facet>
+                        <h:outputText value="#{entry.x}"/>
+                    </h:column>
+                    <h:column headerClass="result-table__column result-table__column_coords">
+                        <f:facet name="header">Y</f:facet>
+                        <h:outputText value="#{entry.y}"/>
+                    </h:column>
+                    <h:column headerClass="result-table__column result-table__column_hitres">
+                        <f:facet name="header">Результат</f:facet>
+                        <h:outputText value="#{entry.getIsHit(resultList.r).message}"/>
+                    </h:column>
+                </h:dataTable>
+                <ui:repeat value="#{resultList.results}" var="result">
+                    <h:outputScript>
+                        createCircle("#{result.x}", "#{result.y}", document.getElementById("input-form:r-text").value, "#{result.getIsHit(resultList.r).hit}")
+                    </h:outputScript>
+                </ui:repeat>
+            </h:panelGroup>
+        </div>
+    </div>
+    </f:view>
+    <h:outputScript>
+        document.getElementById('graph').addEventListener('click', function(event) {
+            var svg = document.getElementById('graph');
+            var svgRect = svg.getBoundingClientRect();
+            var svgX = svgRect.x + svgRect.width / 2; // центр квадрата
+            var svgY = svgRect.y + svgRect.height / 2; // центр квадрата
+
+            var mouseX = event.clientX;
+            var mouseY = event.clientY;
+
+            var x = (mouseX - svgX) / 100;
+            var y = (svgY - mouseY) / 100;
+            var r = document.getElementById("input-form:r-text").value
+            document.getElementById("input-form:x-select").value = Math.floor(x * r);
+            document.getElementById("input-form:y-text").value = y * r;
+            let form = document.getElementById("input-form:submit_form_button")
+            form.click();
+        })
+    </h:outputScript>
+</body>
+</html>

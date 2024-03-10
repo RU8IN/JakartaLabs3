@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+   <head>
+   <h:outputStylesheet library="css" name="styles.css"/>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+   <h:outputScript library="js" name="index.js"/>
+   <h:outputScript library="js" name="main.js"/>
+   </head>
+   <body>
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12 bg-light">
+            <div class="header">
+               <h3 class="text-center">Студент: Васькин Вячеслав Денисович</h3>
+               <h3 class="text-center">Группа: P3211 | ИСУ: 33231 | <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Задание
+               </button></h3>
+            </div>
+         </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center">
+         <div class="col">
+            <span id="time_span"/>
+         </div>
+         <div class="col">
+            <h:link outcome="main">Переход на основную страницу</h:link>
+         </div>
+      </div>
+
+
+      <!-- Модальное окно -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Задание</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+               </div>
+               <div class="modal-body">
+                  <div class="task" id="_iapsportletlab8_WAR_iapsportlet_textBlock"><h3>Внимание! У разных вариантов разный текст задания!</h3><p>Разработать приложение на базе JavaServer Faces Framework, которое осуществляет проверку попадания точки в заданную область на координатной плоскости.</p><p>Приложение должно включать в себя 2 facelets-шаблона - стартовую страницу и основную страницу приложения, а также набор управляемых бинов (managed beans), реализующих логику на стороне сервера.</p><p><b>Стартовая страница должна содержать следующие элементы:</b></p><ul><li>"Шапку", содержащую ФИО студента, номер группы и номер варианта.</li><li>Интерактивные часы, показывающие текущие дату и время, обновляющиеся раз в 13 секунд.</li><li>Ссылку, позволяющую перейти на основную страницу приложения.</li></ul><p><b>Основная страница приложения должна содержать следующие элементы:</b></p><ul><li>Набор компонентов для задания координат точки и радиуса области в соответствии с вариантом задания. Может потребоваться использование дополнительных библиотек компонентов - <a href="http://www.icesoft.org/java/projects/ICEfaces/overview.jsf" target="_blank">ICEfaces</a> (префикс "ace") и <a href="http://www.primefaces.org" target="_blank">PrimeFaces</a> (префикс "p"). Если компонент допускает ввод заведомо некорректных данных (таких, например, как буквы в координатах точки или отрицательный радиус), то приложение должно осуществлять их валидацию.</li><li>Динамически обновляемую картинку, изображающую область на координатной плоскости в соответствии с номером варианта и точки, координаты которых были заданы пользователем. Клик по картинке должен инициировать сценарий, осуществляющий определение координат новой точки и отправку их на сервер для проверки её попадания в область. Цвет точек должен зависить от факта попадания / непопадания в область. Смена радиуса также должна инициировать перерисовку картинки.</li><li>Таблицу со списком результатов предыдущих проверок.</li><li>Ссылку, позволяющую вернуться на стартовую страницу.</li></ul><p><b>Дополнительные требования к приложению:</b></p><ul><li>Все результаты проверки должны сохраняться в базе данных под управлением СУБД PostgreSQL.</li><li>Для доступа к БД необходимо использовать ORM Hibernate.</li><li>Для управления списком результатов должен использоваться Application-scoped Managed Bean.</li><li>Конфигурация управляемых бинов должна быть задана с помощью аннотаций.</li><li>Правила навигации между страницами приложения должны быть заданы в отдельном конфигурационном файле.</li></ul></div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </div>
+   </body>
+   <script>
+      updateCurrentTime();
+      setInterval(updateCurrentTime, 2000);
+   </script>
+</html>
