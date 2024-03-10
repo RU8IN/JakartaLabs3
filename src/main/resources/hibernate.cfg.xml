@@ -1,0 +1,9 @@
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://83.147.245.132:5432/lab3</property>
+        <property name="hibernate.connection.username">rubin</property>
+        <property name="hibernate.connection.password">3JUF4V</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+    </session-factory>
+</hibernate-configuration>

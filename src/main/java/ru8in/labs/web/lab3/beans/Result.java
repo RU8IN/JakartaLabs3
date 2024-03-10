@@ -4,9 +4,28 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import jakarta.persistence.*;
 import org.json.JSONObject;
 
+import javax.xml.namespace.QName;
+
+
+@Entity
+@Table(name="results")
 public class Result implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public static class HitMessage {
 
@@ -33,8 +52,9 @@ public class Result implements Serializable {
 
     private Double x;
     private Double y;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private final Date timestamp;
-    private double executionTime;
     private String hitMessage;
     private boolean isValid = true;
 
@@ -118,14 +138,6 @@ public class Result implements Serializable {
         return timestamp;
     }
 
-    public double getExecutionTime() {
-        return executionTime;
-    }
-
-    public void setExecutionTime(double executionTime) {
-        this.executionTime = executionTime;
-    }
-
     @Override
     public String toString() {
         JSONObject object = new JSONObject();
@@ -134,7 +146,6 @@ public class Result implements Serializable {
         object.put("isValid", this.isValid);
         object.put("hitMessage", this.getHitMessage());
         object.put("timestamp", this.getTimestamp());
-        object.put("executionTime", this.getExecutionTime());
         return object.toString();
     }
 }
