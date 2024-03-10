@@ -2,7 +2,7 @@
 name: CI/CD workflow
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 jobs:
   build:
     name: Build
@@ -19,5 +19,5 @@ jobs:
     name: Deploy to server
     runs-on: self-hosted # use your self-hosted runner
     steps:
-      - name: echo
+      - name: Deploy
         run: /opt/wildfly/bin/jboss-cli.sh --connect --command="deploy --force /opt/actions-runner/_work/JakartaLabs3/JakartaLabs3/build/libs/JakartaLabs-3.war"
