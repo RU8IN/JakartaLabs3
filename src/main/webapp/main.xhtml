@@ -178,7 +178,7 @@
             var x = (mouseX - svgX) / 100;
             var y = (svgY - mouseY) / 100;
             var r = document.getElementById("input-form:r-text").value
-            document.getElementById("input-form:x-select").value = Math.floor(x * r);
+            document.getElementById("input-form:x-select").value = Math.round(x * r);
             document.getElementById("input-form:y-text").value = y * r;
             let form = document.getElementById("input-form:submit_form_button")
             form.click();
