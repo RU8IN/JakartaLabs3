@@ -41,16 +41,20 @@ public class ResultList implements Serializable {
         transaction = entityManager.getTransaction();
     }
 
-    private void loadEntries() {
+    private String getSessionId() {
         FacesContext fCtx = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fCtx.getExternalContext().getSession(false);
-        String sessionId = session.getId();
+        return session.getId();
+    }
+
+    private void loadEntries() {
+
 
         try {
             transaction.begin();
-            result.setSessionId(sessionId); // Установка JSessionID в объект Result
+            result.setSessionId(getSessionId()); // Установка JSessionID в объект Result
             Query query = entityManager.createQuery("SELECT res FROM Result res WHERE res.sessionId = :sessionId");
-            query.setParameter("sessionId", sessionId);
+            query.setParameter("sessionId", getSessionId());
             results = (ArrayList<Result>) query.getResultList();
             transaction.commit();
         } catch (RuntimeException exception) {
@@ -63,13 +67,9 @@ public class ResultList implements Serializable {
     }
 
     public void addResult() {
-        FacesContext fCtx = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fCtx.getExternalContext().getSession(false);
-        String sessionId = session.getId();
-
         try {
             transaction.begin();
-            result.setSessionId(sessionId); // Установка JSessionID в объект Result
+            result.setSessionId(getSessionId()); // Установка JSessionID в объект Result
             entityManager.persist(this.result);
             results.add(this.result);
             result = new Result();
@@ -85,7 +85,8 @@ public class ResultList implements Serializable {
     public String clearResults() {
         try {
             transaction.begin();
-            Query query = entityManager.createQuery("DELETE FROM Result");
+            Query query = entityManager.createQuery("DELETE FROM Result res WHERE res.sessionId = :sessionId ");
+            query.setParameter("sessionId", getSessionId());
             query.executeUpdate();
             results.clear();
             transaction.commit();
