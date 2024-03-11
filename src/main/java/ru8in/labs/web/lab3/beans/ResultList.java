@@ -1,6 +1,7 @@
 package ru8in.labs.web.lab3.beans;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
@@ -98,15 +99,6 @@ public class ResultList implements Serializable {
         }
         return "redirect";
     }
-
-//    public void addResult() {
-//        results.add(0, this.result);
-//        result = new Result();
-//    }
-
-//    public void clearResults() {
-//        if (!results.isEmpty()) results.clear();
-//    }
 
     public ArrayList<Result> getResults() {
         return results;
