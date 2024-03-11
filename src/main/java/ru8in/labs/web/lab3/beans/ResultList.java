@@ -5,6 +5,7 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.persistence.*;
+import jakarta.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -41,9 +42,15 @@ public class ResultList implements Serializable {
     }
 
     private void loadEntries() {
+        FacesContext fCtx = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fCtx.getExternalContext().getSession(false);
+        String sessionId = session.getId();
+
         try {
             transaction.begin();
-            Query query = entityManager.createQuery("SELECT res FROM Result res");
+            result.setSessionId(sessionId); // Установка JSessionID в объект Result
+            Query query = entityManager.createQuery("SELECT res FROM Result res WHERE res.sessionId = :sessionId");
+            query.setParameter("sessionId", sessionId);
             results = (ArrayList<Result>) query.getResultList();
             transaction.commit();
         } catch (RuntimeException exception) {
@@ -56,8 +63,13 @@ public class ResultList implements Serializable {
     }
 
     public void addResult() {
+        FacesContext fCtx = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fCtx.getExternalContext().getSession(false);
+        String sessionId = session.getId();
+
         try {
             transaction.begin();
+            result.setSessionId(sessionId); // Установка JSessionID в объект Result
             entityManager.persist(this.result);
             results.add(this.result);
             result = new Result();
